@@ -3,6 +3,8 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const dishRouter = require('./routes/dishRouter');
+
 const hostname = 'localhost';
 const port = 3000;
 
@@ -11,27 +13,9 @@ app.use(morgan('dev')); // shows information about headers;
 
 app.use(bodyParser.json());
 
-app.all('/dishes',(req,res,next)=>{
-	res.statusCode=200;
-	res.setHeader('Content-Type','text/plain');
-	next();
-});
-app.get('/dishes',(req,res,next)=>{
-	res.end('Send all dishes');
-});
-app.post('/dishes',(req,res,next)=>{
-	res.end(`Will add dish ${req.body.name} with details: ${req.body.description}`);
-});
-app.put('/dishes',(req,res,next)=>{
-	res.statusCode=403;
-	res.end('Not supported');
-});
-app.delete('/dishes',(req,res,next)=>{
-	res.end('Deleting');
-});
+app.use('/dishes',dishRouter);
 
-
-
+/*
 app.get('/dishes/:dishId',(req,res,next)=>{
 	res.end(`Sending details of ${req.params.dishId}`);
 });
@@ -46,6 +30,7 @@ app.put('/dishes/:dishId',(req,res,next)=>{
 app.delete('/dishes/:dishId',(req,res,next)=>{
 	res.end(`Deleting ${req.params.dishId}`);
 });
+*/
 
 
 app.use(express.static(__dirname+'/public')); // search the given directory for serving the static pages;
