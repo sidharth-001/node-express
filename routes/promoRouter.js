@@ -1,20 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const dishRouter = express.Router();
+const promoRouter = express.Router();
 
-dishRouter.use(bodyParser.json());
+promoRouter.use(bodyParser.json());
 
-dishRouter.route('/')
+promoRouter.route('/')
 .all((req,res,next)=>{
 	res.statusCode=200;
 	res.setHeader('Content-Type','text/plain');
 	next();
 })
 .get((req,res,next)=>{
-	res.end('Send all dishes');
+	res.end('Send all promotions');
 })
 .post((req,res,next)=>{
-	res.end(`Will add dish ${req.body.name} with details: ${req.body.description}`);
+	res.end(`Will add promotion ${req.body.name} with details: ${req.body.description}`);
 })
 .put((req,res,next)=>{
 	res.statusCode=403;
@@ -24,25 +24,25 @@ dishRouter.route('/')
 	res.end('Deleting');
 });
 
-dishRouter.route('/:dishId')
+promoRouter.route('/:promoId')
 .all((req,res,next)=>{
 	res.statusCode=200;
 	res.setHeader('Content-Type','text/plain');
 	next();
 })
 .get((req,res,next)=>{
-	res.end(`Sending details of ${req.params.dishId}`);
+	res.end(`Sending details of ${req.params.promoId}`);
 })
 .post((req,res,next)=>{
 	res.statusCode=403;
-	res.end(`Post not supported for ${req.params.dishId}`);
+	res.end(`Post not supported for ${req.params.promoId}`);
 })
 .put((req,res,next)=>{
-	res.write(`Updating dish ${req.params.dishId}`);
-	res.end(`Updated dish with ${req.body.name} , details ${req.body.description}`);
+	res.write(`Updating promotion ${req.params.promoId} `);
+	res.end(`Updated promotion with ${req.body.name} , details ${req.body.description}`);
 })
 .delete((req,res,next)=>{
-	res.end(`Deleting ${req.params.dishId}`);
+	res.end(`Deleting ${req.params.promoId}`);
 });
 
-module.exports = dishRouter;
+module.exports = promoRouter;
